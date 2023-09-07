@@ -7,7 +7,7 @@ from aiohttp import web
 
 logging.basicConfig(filename="output.log", filemode="w", level=logging.INFO)
 
-ROUTE = "http://localhost:33337"
+ROUTE = "http://localhost:33337/"
 LOGGER = logging.getLogger()
 
 
@@ -29,7 +29,10 @@ async def _create_and_start_webserver() -> web.TCPSite:
 
 
 async def _async() -> None:
-    async with aiohttp.ClientSession() as session, session.get(ROUTE, headers={"Authorization": "SomeAsyncAuthHere"}) as _:
+    async with aiohttp.ClientSession() as session, session.get(
+        ROUTE, headers={"Authorization": "SomeAsyncAuthHere"}
+    ) as resp:
+        await resp.text()
         print("sent async request.")
 
 
